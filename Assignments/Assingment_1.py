@@ -129,7 +129,7 @@ def main():
     print("Prediction mean accuracy for the Support Vector Classifier")
     print(pipe_svm.score(x, y))
 
-    pipe = Pipeline([("scaler", StandardScaler()), ("svm", LogisticRegression())])
+    pipe = Pipeline([("scaler", StandardScaler()), ("logistic", LogisticRegression())])
     pipe.fit(x, y)
     # print(pipe.predict(x))
     print("Prediction mean accuracy for the Logistic Regression Classifier")
