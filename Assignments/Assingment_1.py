@@ -14,7 +14,7 @@ from sklearn.preprocessing import StandardScaler
 def main():
 
     iris_data = pd.read_csv(
-        "Assignments/iris.data",
+        "iris.data",
         sep=",",
         names=["sepal_length", "sepal_width", "petal_length", "petal_width", "class"],
     )  # Make sure to add path for data file
@@ -24,13 +24,13 @@ def main():
 
     print("Some statistics of the flowers")
     print("*" * 32)
-    cols = ["sepal_length", "sepal_width", "petal_length", "petal_width"]
+    flour_dimensions = ["sepal_length", "sepal_width", "petal_length", "petal_width"]
 
-    iris_mean = np.mean(iris_data[cols])
+    iris_mean = np.mean(iris_data[flour_dimensions])
     print("Mean:")
     print(iris_mean, "\n")
 
-    iris_min = np.min(iris_data[cols])
+    iris_min = np.min(iris_data[flour_dimensions])
     print("Min:")
     print(iris_min, "\n")
 
@@ -112,7 +112,7 @@ def main():
     fig_distplot.show()
 
     # seperating the predictors from the target
-    x = iris_data.iloc[:, [True, True, True, True, False, False]]
+    x = iris_data[flour_dimensions]
     y = iris_data["class"]
 
     pipe_forest = Pipeline(
