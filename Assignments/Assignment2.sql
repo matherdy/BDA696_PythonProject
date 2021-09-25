@@ -1,5 +1,5 @@
 USE baseball;
-#sets baseball as the database
+#sets baseball as the current database
 
 
 #This calculates the batting average for every player by averaging each of their batting averages
