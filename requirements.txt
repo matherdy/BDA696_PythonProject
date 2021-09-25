@@ -28,6 +28,8 @@ six==1.16.0
     # via
     #   plotly
     #   python-dateutil
+sqlalchemy==1.4.23
+    # via -r requirements.in
 tenacity==8.0.1
     # via plotly
 threadpoolctl==2.2.0
