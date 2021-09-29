@@ -17,8 +17,11 @@ CREATE TABLE batting_avg
 #can group by the year as well as the batter. This makes it an annual batting average.
 DROP TABLE IF EXISTS `batting_avg_annual`;
 CREATE TABLE batting_avg_annual
-  AS (SELECT batter, ROUND(SUM(Hit)/SUM(atBat),3) ba, YEAR(local_date) year
-    FROM batter_counts b JOIN game g on (b.game_id = g.game_id) # makes the join on matching the game_ids
+  AS (SELECT batter
+           , ROUND(SUM(Hit)/SUM(atBat),3) ba
+           , YEAR(local_date) year
+    FROM batter_counts b
+        JOIN game g on (b.game_id = g.game_id) # makes the join on matching the game_ids
     WHERE atBat > 0
     GROUP BY batter, year
     ORDER BY batter, year
@@ -29,16 +32,29 @@ CREATE TABLE batting_avg_annual
 #the important information.
 DROP TABLE IF EXISTS `rolling_1`;
 CREATE TABLE rolling_1
-    SELECT b.game_id , Hit, atBat, local_date, batter
-    FROM batter_counts b JOIN game g on (b.game_id = g.game_id) # makes the join on matching the game_ids
+    SELECT b.game_id
+         , Hit
+         , atBat
+         , local_date
+         , batter
+    FROM batter_counts b
+        JOIN game g on (b.game_id = g.game_id) # makes the join on matching the game_ids
     WHERE atBat > 0;
+
 
 #This query takes the table made in the previous query and joins it on itself so I can get two dates to compare to each
 #other so I can calculate the rolling average.
+CREATE INDEX batter_idx ON rolling_1(batter);
+CREATE INDEX date_idx ON rolling_1(local_date)
+
+
 DROP TABLE IF EXISTS `batting_avg_100_day`;
 CREATE TABLE batting_avg_100_day AS
-    SELECT a.batter, a.game_id, a.local_date, ROUND(SUM(b.Hit)/SUM(b.atBat),3)
+    SELECT a.batter
+         , a.game_id
+         , a.local_date
+         , ROUND(SUM(b.Hit)/SUM(b.atBat),3) batting_avg
     FROM rolling_1 a JOIN rolling_1 b ON
-    b.local_date BETWEEN date_add(a.local_date, INTERVAL -100 DAY) AND a.local_date
-    GROUP BY a.batter AND a.game_id AND a.local_date;
+    b.local_date BETWEEN date_add(a.local_date, INTERVAL -100 DAY) AND a.local_date AND a.batter = b.batter
+    GROUP BY a.batter, a.local_date
 
