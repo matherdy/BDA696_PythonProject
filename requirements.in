@@ -2,5 +2,6 @@ numpy
 pandas
 scikit-learn
 plotly
-#mariadb
-#sqlalchemy
+sqlalchemy
+pyspark
+pyspark-stubs
