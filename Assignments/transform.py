@@ -4,7 +4,7 @@ from pyspark.ml.param.shared import HasInputCols, HasOutputCol
 from pyspark.ml.util import DefaultParamsReadable, DefaultParamsWritable
 
 
-class SplitColumnTransform(
+class CalcBaTransform(
     Transformer,
     HasInputCols,
     HasOutputCol,
@@ -13,7 +13,7 @@ class SplitColumnTransform(
 ):
     @keyword_only
     def __init__(self, inputCols=None, outputCol=None):
-        super(SplitColumnTransform, self).__init__()
+        super(CalcBaTransform, self).__init__()
         kwargs = self._input_kwargs
         self.setParams(**kwargs)
         return
