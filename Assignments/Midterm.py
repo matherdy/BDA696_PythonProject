@@ -16,6 +16,11 @@ from sklearn.metrics import confusion_matrix
 # from cat_correlation import *
 # from load_test_data import *
 
+# I tried to import these from seperate files but flake didnt like it so i put them back in here
+
+# the first 4 functions are all from the professor
+#
+
 
 def fill_na(data):
     if isinstance(data, pd.Series):
@@ -221,6 +226,7 @@ def is_continuous(data, col):
 
 
 def cor_calc_cont_cont(data, pred_lst, resp):
+    # This funciton calculates the correlation between two continuous columns
     cor_tbl = pd.DataFrame(
         columns=[
             "Predictor 1",
@@ -230,20 +236,24 @@ def cor_calc_cont_cont(data, pred_lst, resp):
             "Correlation Metric",
         ]
     )
-    cor_matrix = np.zeros((len(pred_lst), len(pred_lst)))
+    cor_matrix = np.zeros(
+        (len(pred_lst), len(pred_lst))
+    )  # makes 2d matrix to hold values
     i = 0
     path = "/Users/dylanmather/Documents/Grad_School/Fall_21_temp/BDA696_PythonProject2/Assignments/"
+    # The begining of the file path of where to save the tables
     for x, pred1 in enumerate(pred_lst):
         for y, pred2 in enumerate(pred_lst):
             cor_metric = stats.pearsonr(data[pred1], data[pred2])
-
+            # These next few lines plot the indivudal categories by the response. They return file adresses to be put
+            # into the table later.
             if is_continuous(data, resp):
                 file1_name = plot_contp_contr(pred1, resp, data)
                 file2_name = plot_contp_contr(pred2, resp, data)
             else:
                 file1_name = plot_contp_catr(pred1, resp, data)
                 file2_name = plot_contp_catr(pred2, resp, data)
-
+            # adding all the calculated values to the table
             cor_tbl.loc[i] = [
                 pred1,
                 path + file1_name,
@@ -254,10 +264,12 @@ def cor_calc_cont_cont(data, pred_lst, resp):
             cor_matrix[x, y] = cor_metric[0]
             i += 1
     sort_tbl = cor_tbl.sort_values(by="Correlation Metric", ascending=False)
+    # this sorts the table by the correlation metric
     return sort_tbl, cor_matrix
 
 
 def cor_calc_cont_cat(data, cat_pred_lst, cont_pred_lst, resp):
+    # this function does the same as the last but with cont and cat
     cor_tbl = pd.DataFrame(
         columns=[
             "Categorical Predictor",
@@ -277,6 +289,7 @@ def cor_calc_cont_cat(data, cat_pred_lst, cont_pred_lst, resp):
             if is_continuous(data, resp):
                 cont_pred_file_name = plot_contp_contr(cont_pred, resp, data)
                 cat_pred_file_name = "i tried"  # plot_catp_contr(cat_pred,resp,data)
+                # I coudlnt figure out why this plot didnt work
             else:
                 cont_pred_file_name = plot_contp_catr(cont_pred, resp, data)
                 cat_pred_file_name = plot_catp_catr(cat_pred, resp, data)
@@ -295,6 +308,7 @@ def cor_calc_cont_cat(data, cat_pred_lst, cont_pred_lst, resp):
 
 
 def cor_calc_cat_cat(data, cat_pred_lst, resp):
+    # Same as the last two function but with two categorical variable lists
     cor_tbl = pd.DataFrame(
         columns=[
             "Predictor 1",
@@ -312,6 +326,7 @@ def cor_calc_cat_cat(data, cat_pred_lst, resp):
             cor_metric = cat_correlation(data[pred1], data[pred2])
 
             if is_continuous(data, resp):
+                # these are the same plot i coudlnt figure out how to fix
                 file1_name = "i tried"  # plot_catp_contr(pred1, resp, data)
                 file2_name = "i tried"  # plot_catp_contr(pred2, resp, data)
             else:
@@ -332,6 +347,7 @@ def cor_calc_cat_cat(data, cat_pred_lst, resp):
 
 
 def split_cont_cat_lst(data):
+    # This funciton splots
     cont_lst = []
     cat_lst = []
     for col in data.columns:
@@ -344,8 +360,9 @@ def split_cont_cat_lst(data):
 
 def plot_catp_catr(pred, resp, data):
     # This function plots a heatmap of the two catigrocial variables
-    data[pred] = data[pred].astype("string")
-    conf_matrix = confusion_matrix(data[pred], data[resp])
+    copy_data = data.copy()  # The copy makes it so i dont change the outside data
+    copy_data[pred] = copy_data[pred].astype("string")
+    conf_matrix = confusion_matrix(copy_data[pred], copy_data[resp])
     fig = go.Figure(data=go.Heatmap(z=conf_matrix, zmin=0, zmax=conf_matrix.max()))
     fig.update_layout(
         title=f"Categorical Predictor: {pred} by Categorical Response {resp}",
@@ -362,6 +379,7 @@ def plot_catp_catr(pred, resp, data):
 
 
 def plot_catp_contr(pred, resp, data):
+    # plots the data for cat cont
     copy_data = data.copy()
     copy_data[pred] = copy_data[pred].astype(
         "string"
@@ -436,6 +454,7 @@ def plot_contp_contr(pred, resp, data):
 
 
 def mean_diff_tbl(pred, resp, data):
+    # This calculates the mean differnece of the response of 1D so one predictor and one response
     df = pd.DataFrame(
         columns=[
             "(i)",
@@ -486,30 +505,32 @@ def mean_diff_tbl(pred, resp, data):
     return df
 
 
+def plot_mean_diff(df):
+
+    fig = px.bar(x=df["(i)"], y=df["Bin_Mean"])
+    fig.add_hline(y=df["Pop_Mean"][0])
+    fig.show()
+
+
 def brute_force(pred1, pred2, resp, data):
-    # df = pd.DataFrame(
-    #     columns=[
-    #         "x_1",
-    #         "x_2",
-    #         "Bin_Pop",
-    #         "Bin_Mean",
-    #         "Pop_Mean",
-    #         "Pop_Proportion",
-    #         "Mean_Sq_Diff",
-    #         "Mean_Sq_Diff_Weighted",
-    #     ]
-    # )
+
     copy_data = data.copy()
+    resp_mean = data[resp].mean()
+    mean_diff_list = []
     if is_continuous(data, pred1):
         copy_data["bins1"] = pd.cut(copy_data[pred1], 10, labels=False)
         if is_continuous(data, pred2):
             copy_data["bins2"] = pd.cut(copy_data[pred2], 10, labels=False)
             calc_matrix = np.zeros((11, 11))
             for x_1, val1 in enumerate(copy_data["bins1"].unique()):
+
                 for x_2, val2 in enumerate(copy_data["bins2"].unique()):
                     bin_mean = copy_data[resp][
                         (copy_data["bins1"] == x_1) & (copy_data["bins2"] == x_2)
                     ].mean()
+                    if type(bin_mean) == float:
+                        mean_diff_list.append(abs(bin_mean - resp_mean))
+
                     calc_matrix[x_1, x_2] = bin_mean
         else:
             calc_matrix = np.zeros((11, len(copy_data[pred2].unique())))
@@ -518,6 +539,8 @@ def brute_force(pred1, pred2, resp, data):
                     bin_mean = copy_data[resp][
                         (copy_data["bins1"] == x_1) & (copy_data[pred2] == val2)
                     ].mean()
+                    if type(bin_mean) == float:
+                        mean_diff_list.append(abs(bin_mean - resp_mean))
                     calc_matrix[x_1, x_2] = bin_mean
     else:
         if is_continuous(data, pred2):
@@ -528,6 +551,8 @@ def brute_force(pred1, pred2, resp, data):
                     bin_mean = copy_data[resp][
                         (copy_data[pred1] == val1) & (copy_data["bins2"] == x_2)
                     ].mean()
+                    if type(bin_mean) == float:
+                        mean_diff_list.append(abs(bin_mean - resp_mean))
                     calc_matrix[x_1, x_2] = bin_mean
         else:
             calc_matrix = np.zeros(
@@ -538,68 +563,23 @@ def brute_force(pred1, pred2, resp, data):
                     bin_mean = copy_data[resp][
                         (copy_data[pred1] == val1) & (copy_data[pred2] == val2)
                     ].mean()
+                    if type(bin_mean) == float:
+                        mean_diff_list.append(abs(bin_mean - resp_mean))
                     calc_matrix[x_1, x_2] = bin_mean
-    return calc_matrix
+    if len(mean_diff_list) == 0:
+        avg_mean_diff = 0
+    else:
+        avg_mean_diff = sum(mean_diff_list) / len(mean_diff_list)
+    return calc_matrix, avg_mean_diff
 
 
 def make_clickable(url, name):
     # This function is from stack overflow link that the professor provided in the slides
     # https://stackoverflow.com/questions/42263946/how-to-create-a-table-with-clickable-hyperlink-in-pandas-jupyter-notebook
-    return '<a href="{}" rel="noopener noreferrer" target="_blank">{}</a>'.format(
-        url, name
-    )
+    return '<a href="{}">{}</a>'.format(url, name)
 
 
-def add_plot_links(table, data, resp):
-    path = "/Users/dylanmather/Documents/Grad_School/Fall_21_temp/BDA696_PythonProject2/Assignments/"
-    table["pred1_filepath"] = "placeholder" * len(table.iloc[0])
-    table["pred2_filepath"] = "placeholder" * len(table.iloc[0])
-    if is_continuous(data, resp):
-        i = 0
-        for ind in range(2):
-            for pred in table.iloc[:, ind]:
-                if is_continuous(data, pred):
-                    file_name = plot_contp_contr(pred, resp, data)
-                    table[f"pred{ind+1}_filepath"][i] = path + file_name
-                    table.iloc[:, ind] = table.apply(
-                        lambda x: make_clickable(
-                            x[f"pred{ind+1}_filepath"], x.iloc[:, ind]
-                        ),
-                        axis=1,
-                    )
-                else:
-                    file_name = plot_catp_contr(pred, resp, data)
-                    table[f"pred{ind+1}_filepath"][i] = path + file_name
-                    table.iloc[:, ind] = table.apply(
-                        lambda x: make_clickable(
-                            x[f"pred{ind+1}_filepath"], x.iloc[:, ind]
-                        ),
-                        axis=1,
-                    )
-                i += 1
-    else:
-        i = 0
-        for ind in range(2):
-            for pred in table.iloc[:, ind]:
-                if is_continuous(data, pred):
-                    file_name = plot_contp_catr(pred, resp, data)
-                    table[f"pred{ind+1}_filepath"] = path + file_name
-                    table.iloc[:, ind] = table.apply(
-                        lambda x: make_clickable(
-                            x[f"pred{ind+1}_filepath"], x.iloc[:, ind]
-                        ),
-                        axis=1,
-                    )
-                else:
-                    file_name = plot_catp_catr(pred, resp, data)
-                    table[f"pred{ind+1}_filepath"] = path + file_name
-                    table.iloc[:, ind] = table.apply(
-                        lambda x: make_clickable(
-                            x[f"pred{ind+1}_filepath"], x.iloc[:, ind]
-                        ),
-                        axis=1,
-                    )
-                i += 1
+# rel="noopener noreferrer" target="_blank"
 
 
 def main():
@@ -607,16 +587,107 @@ def main():
     pred_data = test_data.loc[:, test_data.columns != response]
     cont_cols_lst, cat_cols_lst = split_cont_cat_lst(pred_data)
 
+    cat_cont_diff_df = pd.DataFrame(
+        columns=["Catigorical", "Continuous", "Mean diff 2d"]
+    )
+    i_1 = 0
     for col1 in cat_cols_lst:
         for col2 in cont_cols_lst:
-            print(
-                col1,
-                is_continuous(test_data, col1),
-                col2,
-                is_continuous(test_data, col2),
-            )
 
-            print(brute_force(col1, col2, response, test_data))
+            cat_cont_brute_matrix, mean_diff_2d = brute_force(
+                col1, col2, response, test_data
+            )
+            cat_cont_diff_df.loc[i_1] = [col1, col2, mean_diff_2d]
+            i_1 += 1
+    cat_cont_diff_df.sort_values("Mean diff 2d", ascending=False).to_html(
+        "html_files/cat_cont_diff2d.html"
+    )
+
+    cat_cat_diff_df = pd.DataFrame(
+        columns=["Catigorical_1", "Catigorical_2", "Mean diff 2d"]
+    )
+    i_2 = 0
+    for col1 in cat_cols_lst:
+        for col2 in cat_cols_lst:
+
+            cat_cat_brute_matrix, mean_diff_2d = brute_force(
+                col1, col2, response, test_data
+            )
+            cat_cat_diff_df.loc[i_2] = [col1, col2, mean_diff_2d]
+            i_2 += 1
+    cat_cat_diff_df.sort_values("Mean diff 2d", ascending=False).to_html(
+        "html_files/cat_cat_diff2d.html"
+    )
+
+    cont_cont_diff_df = pd.DataFrame(
+        columns=["Continuous_1", "Continuous_2", "Mean diff 2d"]
+    )
+    i_3 = 0
+    for col1 in cont_cols_lst:
+        for col2 in cont_cols_lst:
+
+            cont_cont_brute_matrix, mean_diff_2d = brute_force(
+                col1, col2, response, test_data
+            )
+            cont_cont_diff_df.loc[i_3] = [col1, col2, mean_diff_2d]
+            i_3 += 1
+    cont_cont_diff_df.sort_values("Mean diff 2d", ascending=False).to_html(
+        "html_files/cont_cont_diff2d.html"
+    )
+
+    # This next chunk of code is adapated from homework 4
+    variable_df = pd.DataFrame(
+        columns=[
+            "Predictor",
+            "Response",
+            "Mean Squared Differnece Weighted",
+        ]
+    )
+    if is_continuous(test_data, response):
+        for i, col in enumerate(
+            test_data.loc[:, ~test_data.columns.isin([response])].columns
+        ):
+            # I commented out all the plots so they dont all plot so uncomment them to see the difference of mean
+            if is_continuous(test_data, col):
+                msd_tbl = mean_diff_tbl(col, response, test_data)
+                sum_msdw = sum(msd_tbl["Mean_Sq_Diff_Weighted"])
+                # plot_mean_diff(msd_tbl)
+
+            else:
+
+                msd_tbl = mean_diff_tbl(col, response, test_data)
+                sum_msdw = sum(msd_tbl["Mean_Sq_Diff_Weighted"])
+                # plot_mean_diff(msd_tbl)
+
+            variable_df.loc[i] = [
+                col,
+                response,
+                sum_msdw,
+            ]
+    else:
+        for i, col in enumerate(
+            test_data.loc[:, ~test_data.columns.isin([response])].columns
+        ):
+
+            if is_continuous(test_data, col):
+                msd_tbl = mean_diff_tbl(col, response, test_data)
+                sum_msdw = sum(msd_tbl["Mean_Sq_Diff_Weighted"])
+                # plot_mean_diff(msd_tbl)
+
+            else:
+                msd_tbl = mean_diff_tbl(col, response, test_data)
+                sum_msdw = sum(msd_tbl["Mean_Sq_Diff_Weighted"])
+                # plot_mean_diff(msd_tbl)
+
+            variable_df.loc[i] = [
+                col,
+                response,
+                sum_msdw,
+            ]
+
+    variable_df.sort_values(
+        "Mean Squared Differnece Weighted", ascending=False
+    ).to_html("html_files/mean_diff_1D_table.html")
 
     print(pred_data[cont_cols_lst].head())
     cont_cont_pred_table, cont_cont_pred_matrix = cor_calc_cont_cont(
