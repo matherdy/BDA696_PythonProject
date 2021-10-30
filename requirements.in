@@ -6,3 +6,4 @@ sqlalchemy
 pyspark
 pyspark-stubs
 statsmodels
+seaborn
