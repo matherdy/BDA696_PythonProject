@@ -9,57 +9,32 @@
       </script>
       <script src="https://cdn.plot.ly/plotly-2.4.2.min.js"></script>
       <div
-        id="d8e419e3-7c78-4614-a485-7d0aa359657a"
+        id="24c6d388-7bf2-4a70-96a3-a62194e9fd71"
         class="plotly-graph-div"
         style="height: 100%; width: 100%"
       ></div>
       <script type="text/javascript">
         window.PLOTLYENV = window.PLOTLYENV || {};
-        if (document.getElementById("d8e419e3-7c78-4614-a485-7d0aa359657a")) {
+        if (document.getElementById("24c6d388-7bf2-4a70-96a3-a62194e9fd71")) {
           Plotly.newPlot(
-            "d8e419e3-7c78-4614-a485-7d0aa359657a",
+            "24c6d388-7bf2-4a70-96a3-a62194e9fd71",
             [
               {
-                box: { visible: true },
-                meanline: { visible: true },
-                name: "Iris-setosa",
-                type: "violin",
-                x: ["Iris-setosa", "Iris-setosa", "Iris-setosa"],
-                y: [
-                  3.5, 3.0, 3.2, 3.1, 3.6, 3.9, 3.4, 3.4, 2.9, 3.1, 3.7, 3.4,
-                  3.0, 3.0, 4.0, 4.4, 3.9, 3.5, 3.8, 3.8, 3.4, 3.7, 3.6, 3.3,
-                  3.4, 3.0, 3.4, 3.5, 3.4, 3.2, 3.1, 3.4, 4.1, 4.2, 3.1, 3.2,
-                  3.5, 3.1, 3.0, 3.4, 3.5, 2.3, 3.2, 3.5, 3.8, 3.0, 3.8, 3.2,
-                  3.7, 3.3,
+                type: "heatmap",
+                z: [
+                  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                  [23, 16, 0, 0, 0, 0, 0, 0, 0, 0],
+                  [155, 133, 0, 0, 0, 0, 0, 0, 0, 0],
+                  [175, 120, 0, 0, 0, 0, 0, 0, 0, 0],
+                  [146, 114, 0, 0, 0, 0, 0, 0, 0, 0],
+                  [190, 203, 0, 0, 0, 0, 0, 0, 0, 0],
+                  [179, 281, 0, 0, 0, 0, 0, 0, 0, 0],
+                  [142, 200, 0, 0, 0, 0, 0, 0, 0, 0],
+                  [28, 72, 0, 0, 0, 0, 0, 0, 0, 0],
+                  [1, 28, 0, 0, 0, 0, 0, 0, 0, 0],
                 ],
-              },
-              {
-                box: { visible: true },
-                meanline: { visible: true },
-                name: "Iris-versicolor",
-                type: "violin",
-                x: ["Iris-versicolor", "Iris-versicolor", "Iris-versicolor"],
-                y: [
-                  3.2, 3.2, 3.1, 2.3, 2.8, 2.8, 3.3, 2.4, 2.9, 2.7, 2.0, 3.0,
-                  2.2, 2.9, 2.9, 3.1, 3.0, 2.7, 2.2, 2.5, 3.2, 2.8, 2.5, 2.8,
-                  2.9, 3.0, 2.8, 3.0, 2.9, 2.6, 2.4, 2.4, 2.7, 2.7, 3.0, 3.4,
-                  3.1, 2.3, 3.0, 2.5, 2.6, 3.0, 2.6, 2.3, 2.7, 3.0, 2.9, 2.9,
-                  2.5, 2.8,
-                ],
-              },
-              {
-                box: { visible: true },
-                meanline: { visible: true },
-                name: "Iris-virginica",
-                type: "violin",
-                x: ["Iris-virginica", "Iris-virginica", "Iris-virginica"],
-                y: [
-                  3.3, 2.7, 3.0, 2.9, 3.0, 3.0, 2.5, 2.9, 2.5, 3.6, 3.2, 2.7,
-                  3.0, 2.5, 2.8, 3.2, 3.0, 3.8, 2.6, 2.2, 3.2, 2.8, 2.8, 2.7,
-                  3.3, 3.2, 2.8, 3.0, 2.8, 3.0, 2.8, 3.8, 2.8, 2.8, 2.6, 3.0,
-                  3.4, 3.1, 3.0, 3.1, 3.1, 3.1, 2.7, 3.2, 3.3, 3.0, 2.5, 3.0,
-                  3.4, 3.0,
-                ],
+                zmax: 281,
+                zmin: 0,
               },
             ],
             {
@@ -482,7 +457,7 @@
                 },
               },
               title: {
-                text: "Continuous Predictor: sepal_width by Categorical Response: class",
+                text: "Categorical Predictor: innings_pitched by Categorical Response home_team_wins",
               },
               xaxis: { title: { text: "Response" } },
               yaxis: { title: { text: "Predictor" } },

@@ -9,71 +9,53 @@
       </script>
       <script src="https://cdn.plot.ly/plotly-2.4.2.min.js"></script>
       <div
-        id="cbd931f2-3c20-4361-a62b-36a6b53ef8b3"
+        id="908349eb-a3b8-45ab-bf97-323f381ee606"
         class="plotly-graph-div"
         style="height: 100%; width: 100%"
       ></div>
       <script type="text/javascript">
         window.PLOTLYENV = window.PLOTLYENV || {};
-        if (document.getElementById("cbd931f2-3c20-4361-a62b-36a6b53ef8b3")) {
+        if (document.getElementById("908349eb-a3b8-45ab-bf97-323f381ee606")) {
           Plotly.newPlot(
-            "cbd931f2-3c20-4361-a62b-36a6b53ef8b3",
+            "908349eb-a3b8-45ab-bf97-323f381ee606",
             [
               {
+                alignmentgroup: "True",
                 hovertemplate: "x=%{x}<br>y=%{y}<extra></extra>",
                 legendgroup: "",
-                marker: { color: "#636efa", symbol: "circle" },
-                mode: "markers",
+                marker: { color: "#636efa", pattern: { shape: "" } },
                 name: "",
+                offsetgroup: "",
                 orientation: "v",
                 showlegend: false,
-                type: "scatter",
-                x: [
-                  6, 6, 4, 6, 8, 6, 8, 4, 4, 6, 6, 8, 8, 8, 8, 8, 8, 4, 4, 4, 4,
-                  8, 8, 8, 8, 4, 4, 4, 8, 6, 8, 4,
-                ],
+                textposition: "auto",
+                type: "bar",
+                x: [0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0],
                 xaxis: "x",
                 y: [
-                  21.0, 21.0, 22.8, 21.4, 18.7, 18.1, 14.3, 24.4, 22.8, 19.2,
-                  17.8, 16.4, 17.3, 15.2, 10.4, 10.4, 14.7, 32.4, 30.4, 33.9,
-                  21.5, 15.5, 15.2, 13.3, 19.2, 27.3, 26.0, 30.4, 15.8, 19.7,
-                  15.0, 21.4,
-                ],
-                yaxis: "y",
-              },
-              {
-                hovertemplate:
-                  "<b>OLS trendline</b><br>y = -2.87579 * x + 37.8846<br>R<sup>2</sup>=0.726180<br><br>x=%{x}<br>y=%{y} <b>(trend)</b><extra></extra>",
-                legendgroup: "",
-                marker: { color: "#636efa", symbol: "circle" },
-                mode: "lines",
-                name: "",
-                showlegend: false,
-                type: "scatter",
-                x: [
-                  4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 6, 6, 6, 6, 6, 6, 6, 8, 8, 8,
-                  8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8,
-                ],
-                xaxis: "x",
-                y: [
-                  26.38141592920355, 26.38141592920355, 26.38141592920355,
-                  26.38141592920355, 26.38141592920355, 26.38141592920355,
-                  26.38141592920355, 26.38141592920355, 26.38141592920355,
-                  26.38141592920355, 26.38141592920355, 20.629835651074593,
-                  20.629835651074593, 20.629835651074593, 20.629835651074593,
-                  20.629835651074593, 20.629835651074593, 20.629835651074593,
-                  14.878255372945635, 14.878255372945635, 14.878255372945635,
-                  14.878255372945635, 14.878255372945635, 14.878255372945635,
-                  14.878255372945635, 14.878255372945635, 14.878255372945635,
-                  14.878255372945635, 14.878255372945635, 14.878255372945635,
-                  14.878255372945635, 14.878255372945635,
+                  0.4740740740740741, 0.5353159851301115, 0.551056338028169,
+                  0.552, 0.4782608695652174, 0.5869565217391305,
+                  0.47368421052631576, 0.6153846153846154, 0.6666666666666666,
+                  0.6666666666666666,
                 ],
                 yaxis: "y",
               },
             ],
             {
+              barmode: "relative",
               legend: { tracegroupgap: 0 },
               margin: { t: 60 },
+              shapes: [
+                {
+                  type: "line",
+                  x0: 0,
+                  x1: 1,
+                  xref: "x domain",
+                  y0: 0.529011786038078,
+                  y1: 0.529011786038078,
+                  yref: "y",
+                },
+              ],
               template: {
                 data: {
                   bar: [
@@ -493,14 +475,18 @@
                 },
               },
               title: {
-                text: "Variable: cyl: (t-value=-8.919699) (p-value=6.112687e-10)",
+                text: "Mean Difference of Response for season_so_over_bb",
               },
               xaxis: {
                 anchor: "y",
                 domain: [0.0, 1.0],
-                title: { text: "Variable: cyl" },
+                title: { text: "Bin" },
               },
-              yaxis: { anchor: "x", domain: [0.0, 1.0], title: { text: "y" } },
+              yaxis: {
+                anchor: "x",
+                domain: [0.0, 1.0],
+                title: { text: "Bin Mean" },
+              },
             },
             { responsive: true }
           );

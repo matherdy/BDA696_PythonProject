@@ -9,60 +9,52 @@
       </script>
       <script src="https://cdn.plot.ly/plotly-2.4.2.min.js"></script>
       <div
-        id="cba9dad5-ee4e-4c76-a9af-c738b7c4c0d0"
+        id="f27c87df-1083-481a-ad25-7690a3e6f6bb"
         class="plotly-graph-div"
         style="height: 100%; width: 100%"
       ></div>
       <script type="text/javascript">
         window.PLOTLYENV = window.PLOTLYENV || {};
-        if (document.getElementById("cba9dad5-ee4e-4c76-a9af-c738b7c4c0d0")) {
+        if (document.getElementById("f27c87df-1083-481a-ad25-7690a3e6f6bb")) {
           Plotly.newPlot(
-            "cba9dad5-ee4e-4c76-a9af-c738b7c4c0d0",
+            "f27c87df-1083-481a-ad25-7690a3e6f6bb",
             [
               {
-                box: { visible: true },
-                meanline: { visible: true },
-                name: "Iris-setosa",
-                type: "violin",
-                x: ["Iris-setosa", "Iris-setosa", "Iris-setosa"],
+                alignmentgroup: "True",
+                hovertemplate: "x=%{x}<br>y=%{y}<extra></extra>",
+                legendgroup: "",
+                marker: { color: "#636efa", pattern: { shape: "" } },
+                name: "",
+                offsetgroup: "",
+                orientation: "v",
+                showlegend: false,
+                textposition: "auto",
+                type: "bar",
+                x: [0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0],
+                xaxis: "x",
                 y: [
-                  1.4, 1.4, 1.3, 1.5, 1.4, 1.7, 1.4, 1.5, 1.4, 1.5, 1.5, 1.6,
-                  1.4, 1.1, 1.2, 1.5, 1.3, 1.4, 1.7, 1.5, 1.7, 1.5, 1.0, 1.7,
-                  1.9, 1.6, 1.6, 1.5, 1.4, 1.6, 1.6, 1.5, 1.5, 1.4, 1.5, 1.2,
-                  1.3, 1.5, 1.3, 1.5, 1.3, 1.3, 1.3, 1.6, 1.9, 1.4, 1.6, 1.4,
-                  1.5, 1.4,
+                  0.4901222953904045, 0.5493757094211124, 0.6108786610878661,
+                  0.5714285714285714, 0.5, 0.6666666666666666,
+                  0.6666666666666666, 1.0, 1.0, 0.75,
                 ],
-              },
-              {
-                box: { visible: true },
-                meanline: { visible: true },
-                name: "Iris-versicolor",
-                type: "violin",
-                x: ["Iris-versicolor", "Iris-versicolor", "Iris-versicolor"],
-                y: [
-                  4.7, 4.5, 4.9, 4.0, 4.6, 4.5, 4.7, 3.3, 4.6, 3.9, 3.5, 4.2,
-                  4.0, 4.7, 3.6, 4.4, 4.5, 4.1, 4.5, 3.9, 4.8, 4.0, 4.9, 4.7,
-                  4.3, 4.4, 4.8, 5.0, 4.5, 3.5, 3.8, 3.7, 3.9, 5.1, 4.5, 4.5,
-                  4.7, 4.4, 4.1, 4.0, 4.4, 4.6, 4.0, 3.3, 4.2, 4.2, 4.2, 4.3,
-                  3.0, 4.1,
-                ],
-              },
-              {
-                box: { visible: true },
-                meanline: { visible: true },
-                name: "Iris-virginica",
-                type: "violin",
-                x: ["Iris-virginica", "Iris-virginica", "Iris-virginica"],
-                y: [
-                  6.0, 5.1, 5.9, 5.6, 5.8, 6.6, 4.5, 6.3, 5.8, 6.1, 5.1, 5.3,
-                  5.5, 5.0, 5.1, 5.3, 5.5, 6.7, 6.9, 5.0, 5.7, 4.9, 6.7, 4.9,
-                  5.7, 6.0, 4.8, 4.9, 5.6, 5.8, 6.1, 6.4, 5.6, 5.1, 5.6, 6.1,
-                  5.6, 5.5, 4.8, 5.4, 5.6, 5.1, 5.1, 5.9, 5.7, 5.2, 5.0, 5.2,
-                  5.4, 5.1,
-                ],
+                yaxis: "y",
               },
             ],
             {
+              barmode: "relative",
+              legend: { tracegroupgap: 0 },
+              margin: { t: 60 },
+              shapes: [
+                {
+                  type: "line",
+                  x0: 0,
+                  x1: 1,
+                  xref: "x domain",
+                  y0: 0.529011786038078,
+                  y1: 0.529011786038078,
+                  yref: "y",
+                },
+              ],
               template: {
                 data: {
                   bar: [
@@ -482,10 +474,18 @@
                 },
               },
               title: {
-                text: "Continuous Predictor: petal_length by Categorical Response: class",
+                text: "Mean Difference of Response for pitches_over_DSLP",
               },
-              xaxis: { title: { text: "Response" } },
-              yaxis: { title: { text: "Predictor" } },
+              xaxis: {
+                anchor: "y",
+                domain: [0.0, 1.0],
+                title: { text: "Bin" },
+              },
+              yaxis: {
+                anchor: "x",
+                domain: [0.0, 1.0],
+                title: { text: "Bin Mean" },
+              },
             },
             { responsive: true }
           );

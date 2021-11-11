@@ -9,60 +9,52 @@
       </script>
       <script src="https://cdn.plot.ly/plotly-2.4.2.min.js"></script>
       <div
-        id="46199802-9e2e-41df-ac68-beb3464d139b"
+        id="35fc3912-88c5-4161-9ade-01418feb98e4"
         class="plotly-graph-div"
         style="height: 100%; width: 100%"
       ></div>
       <script type="text/javascript">
         window.PLOTLYENV = window.PLOTLYENV || {};
-        if (document.getElementById("46199802-9e2e-41df-ac68-beb3464d139b")) {
+        if (document.getElementById("35fc3912-88c5-4161-9ade-01418feb98e4")) {
           Plotly.newPlot(
-            "46199802-9e2e-41df-ac68-beb3464d139b",
+            "35fc3912-88c5-4161-9ade-01418feb98e4",
             [
               {
-                box: { visible: true },
-                meanline: { visible: true },
-                name: "Iris-setosa",
-                type: "violin",
-                x: ["Iris-setosa", "Iris-setosa", "Iris-setosa"],
+                alignmentgroup: "True",
+                hovertemplate: "x=%{x}<br>y=%{y}<extra></extra>",
+                legendgroup: "",
+                marker: { color: "#636efa", pattern: { shape: "" } },
+                name: "",
+                offsetgroup: "",
+                orientation: "v",
+                showlegend: false,
+                textposition: "auto",
+                type: "bar",
+                x: [0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0],
+                xaxis: "x",
                 y: [
-                  0.2, 0.2, 0.2, 0.2, 0.2, 0.4, 0.3, 0.2, 0.2, 0.1, 0.2, 0.2,
-                  0.1, 0.1, 0.2, 0.4, 0.4, 0.3, 0.3, 0.3, 0.2, 0.4, 0.2, 0.5,
-                  0.2, 0.2, 0.4, 0.2, 0.2, 0.2, 0.2, 0.4, 0.1, 0.2, 0.1, 0.2,
-                  0.2, 0.1, 0.2, 0.2, 0.3, 0.3, 0.2, 0.6, 0.4, 0.3, 0.2, 0.2,
-                  0.2, 0.2,
+                  0.5365853658536586, 0.5113065326633166, 0.5381715362865221,
+                  0.5288461538461539, 0.5454545454545454, 0.6153846153846154,
+                  0.7142857142857143, 0.6666666666666666,
                 ],
-              },
-              {
-                box: { visible: true },
-                meanline: { visible: true },
-                name: "Iris-versicolor",
-                type: "violin",
-                x: ["Iris-versicolor", "Iris-versicolor", "Iris-versicolor"],
-                y: [
-                  1.4, 1.5, 1.5, 1.3, 1.5, 1.3, 1.6, 1.0, 1.3, 1.4, 1.0, 1.5,
-                  1.0, 1.4, 1.3, 1.4, 1.5, 1.0, 1.5, 1.1, 1.8, 1.3, 1.5, 1.2,
-                  1.3, 1.4, 1.4, 1.7, 1.5, 1.0, 1.1, 1.0, 1.2, 1.6, 1.5, 1.6,
-                  1.5, 1.3, 1.3, 1.3, 1.2, 1.4, 1.2, 1.0, 1.3, 1.2, 1.3, 1.3,
-                  1.1, 1.3,
-                ],
-              },
-              {
-                box: { visible: true },
-                meanline: { visible: true },
-                name: "Iris-virginica",
-                type: "violin",
-                x: ["Iris-virginica", "Iris-virginica", "Iris-virginica"],
-                y: [
-                  2.5, 1.9, 2.1, 1.8, 2.2, 2.1, 1.7, 1.8, 1.8, 2.5, 2.0, 1.9,
-                  2.1, 2.0, 2.4, 2.3, 1.8, 2.2, 2.3, 1.5, 2.3, 2.0, 2.0, 1.8,
-                  2.1, 1.8, 1.8, 1.8, 2.1, 1.6, 1.9, 2.0, 2.2, 1.5, 1.4, 2.3,
-                  2.4, 1.8, 1.8, 2.1, 2.4, 2.3, 1.9, 2.3, 2.5, 2.3, 1.9, 2.0,
-                  2.3, 1.8,
-                ],
+                yaxis: "y",
               },
             ],
             {
+              barmode: "relative",
+              legend: { tracegroupgap: 0 },
+              margin: { t: 60 },
+              shapes: [
+                {
+                  type: "line",
+                  x0: 0,
+                  x1: 1,
+                  xref: "x domain",
+                  y0: 0.529011786038078,
+                  y1: 0.529011786038078,
+                  yref: "y",
+                },
+              ],
               template: {
                 data: {
                   bar: [
@@ -482,10 +474,18 @@
                 },
               },
               title: {
-                text: "Continuous Predictor: petal_width by Categorical Response: class",
+                text: "Mean Difference of Response for career_so_over_bb",
               },
-              xaxis: { title: { text: "Response" } },
-              yaxis: { title: { text: "Predictor" } },
+              xaxis: {
+                anchor: "y",
+                domain: [0.0, 1.0],
+                title: { text: "Bin" },
+              },
+              yaxis: {
+                anchor: "x",
+                domain: [0.0, 1.0],
+                title: { text: "Bin Mean" },
+              },
             },
             { responsive: true }
           );

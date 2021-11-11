@@ -9,30 +9,52 @@
       </script>
       <script src="https://cdn.plot.ly/plotly-2.4.2.min.js"></script>
       <div
-        id="de2bb767-1916-4d28-a0d9-186a34e9049a"
+        id="42a98002-541f-4c42-baa2-34b680f0c710"
         class="plotly-graph-div"
         style="height: 100%; width: 100%"
       ></div>
       <script type="text/javascript">
         window.PLOTLYENV = window.PLOTLYENV || {};
-        if (document.getElementById("de2bb767-1916-4d28-a0d9-186a34e9049a")) {
+        if (document.getElementById("42a98002-541f-4c42-baa2-34b680f0c710")) {
           Plotly.newPlot(
-            "de2bb767-1916-4d28-a0d9-186a34e9049a",
+            "42a98002-541f-4c42-baa2-34b680f0c710",
             [
               {
-                type: "heatmap",
-                z: [
-                  [0, 0, 50, 24, 6],
-                  [0, 0, 0, 26, 44],
-                  [0, 0, 0, 0, 0],
-                  [0, 0, 0, 0, 0],
-                  [0, 0, 0, 0, 0],
+                alignmentgroup: "True",
+                hovertemplate: "x=%{x}<br>y=%{y}<extra></extra>",
+                legendgroup: "",
+                marker: { color: "#636efa", pattern: { shape: "" } },
+                name: "",
+                offsetgroup: "",
+                orientation: "v",
+                showlegend: false,
+                textposition: "auto",
+                type: "bar",
+                x: [0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0],
+                xaxis: "x",
+                y: [
+                  0.4954128440366973, 0.48214285714285715, 0.5756756756756757,
+                  0.5238095238095238, 0.5108695652173914, 0.5, 0.56, 0.6,
+                  0.45454545454545453, 0.625,
                 ],
-                zmax: 50,
-                zmin: 0,
+                yaxis: "y",
               },
             ],
             {
+              barmode: "relative",
+              legend: { tracegroupgap: 0 },
+              margin: { t: 60 },
+              shapes: [
+                {
+                  type: "line",
+                  x0: 0,
+                  x1: 1,
+                  xref: "x domain",
+                  y0: 0.529011786038078,
+                  y1: 0.529011786038078,
+                  yref: "y",
+                },
+              ],
               template: {
                 data: {
                   bar: [
@@ -452,10 +474,18 @@
                 },
               },
               title: {
-                text: "Categorical Predictor: cat1 by Categorical Response class",
+                text: "Mean Difference of Response for season_over_career_era",
               },
-              xaxis: { title: { text: "Response" } },
-              yaxis: { title: { text: "Predictor" } },
+              xaxis: {
+                anchor: "y",
+                domain: [0.0, 1.0],
+                title: { text: "Bin" },
+              },
+              yaxis: {
+                anchor: "x",
+                domain: [0.0, 1.0],
+                title: { text: "Bin Mean" },
+              },
             },
             { responsive: true }
           );
