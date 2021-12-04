@@ -19,7 +19,7 @@ def is_continuous(data, col):
 
 
 def load_data():
-
+    # I used this function to load data to test my different fucntions
     while True:
         data_name = input("Enter data path: ")
         try:
@@ -37,7 +37,11 @@ def load_data():
     return data, response_name
 
 
+# All the plotting function code comes from mr sharky's slides
+
+
 def plot_catp_catr(pred, resp, data):
+    # This function plots a heatmap of the two catigrocial variables
     data[pred] = data[pred].astype("string")
     conf_matrix = confusion_matrix(data[pred], data[resp])
     fig = go.Figure(data=go.Heatmap(z=conf_matrix, zmin=0, zmax=conf_matrix.max()))
@@ -54,7 +58,9 @@ def plot_catp_catr(pred, resp, data):
 
 
 def plot_catp_contr(pred, resp, data):
-    data[pred] = data[pred].astype("string")
+    data[pred] = data[pred].astype(
+        "string"
+    )  # made this a string since its a catigorical variable
     cat_pred_list = list(data[pred].unique())
     cont_resp_list = [
         data[resp][data[pred] == pred_name] for pred_name in cat_pred_list

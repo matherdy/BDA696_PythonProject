@@ -1,0 +1,24 @@
+version: "3.3"
+services:
+  assignment5:
+    container_name: assignment5
+    depends_on:
+      - mariadb
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./docker_hw
+
+  mariadb:
+    container_name: mariadb
+    image: mariadb:10.6.4
+    restart: always
+    environment:
+      MYSQL_USER: root
+      MYSQL_PASSWORD: BDAMaster
+      MYSQL_ROOT_PASSWORD: BDAMaster
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./mariadb:/config
