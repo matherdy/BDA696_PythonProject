@@ -6,7 +6,9 @@
 #
 joblib==1.0.1
     # via scikit-learn
-numpy==1.17.4
+mariadb==1.0.9
+    # via -r requirements.in
+numpy==1.18.4
     # via
     #   pandas
     #   patsy
