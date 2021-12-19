@@ -6,7 +6,7 @@
 #
 joblib==1.0.1
     # via scikit-learn
-numpy==1.17.1
+numpy==1.17.4
     # via
     #   pandas
     #   patsy
