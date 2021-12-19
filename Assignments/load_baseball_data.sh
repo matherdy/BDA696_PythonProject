@@ -1,15 +1,22 @@
 #!/bin/bash
-
 pwd
-docker-compose up mariadb
 
+sleep 30
 
 #Got some help from Will but wasnt able to figure it out.
-if ! mysql -h mariadb -uroot -psecret -e 'use baseball'; then
-  mysql -h mariadb -uroot -psecret -e "create database baseball;"
-  mysql -h maraidb -uroot -psecret -D baseball < ./baseball.sql
+if ! mysql -h mariadb -u root -pBDAMaster -e 'use baseball'; then
+  echo "Loading baseball data into SQL"
+  mysql -h mariadb -u root -pBDAMaster -e "create database baseball;"
+  mysql -h mariadb -u root -pBDAMaster baseball < ./baseball.sql
 fi
-docker-compose up assignment5
 
+echo "Running Assignment5.sql"
+mysql -h mariadb -u root -pBDAMaster baseball < ./Assignment5.sql
 
-mysql -h assignment5 -uroot -psecret baseball < ./Assignment5.sql
+mkdir -p /app/html_files/plots
+
+echo"Running Assignment5.py"
+python ./Assignment5.py
+
+#echo"Running Final.py"
+#python ./Final.py

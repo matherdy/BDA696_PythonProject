@@ -331,7 +331,7 @@ def main():
     # change the port for when running on container
     db_user = "root"
     db_pass = "BDAMaster"
-    db_host = "mariadb"  # "localhost"   #use local host when not running from container
+    db_host = "mariadb"  # "localhost"  #use local host when not running from container
     db_database = "baseball"
     db_port = 3306  # use 3306 when running from continer and 3307 when running from pycharm to conatiner maria
     connect_string = f"mariadb+mariadbconnector://{db_user}:{db_pass}@{db_host}:{db_port}/{db_database}"
