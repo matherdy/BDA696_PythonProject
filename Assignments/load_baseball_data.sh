@@ -15,8 +15,8 @@ mysql -h mariadb -u root -pBDAMaster baseball < ./Assignment5.sql
 
 mkdir -p /app/html_files/plots
 
-echo"Running Assignment5.py"
-python ./Assignment5.py
+#echo "Running Assignment5.py"
+#python ./Assignment5.py
 
-#echo"Running Final.py"
-#python ./Final.py
+echo "Running Final.py"
+python ./Final.py

@@ -15,6 +15,10 @@ o team avg rolling sum players rolling avg / num players
 o team batting average annual
 
 
+make sure to compare home team vs away team features
+look up more features online on the wikipedia
+
+
 */
 #UPDATE pitcher_stat career_bb = career_bb + 1
 
@@ -102,10 +106,14 @@ CREATE TABLE game_with_outcome AS
     SELECT
         g.game_id,
         g.home_team_id,
+        g.away_team_id,
         g.home_pitcher,
+        g.away_pitcher,
         g.local_date,
         g.home_w,
         g.home_l,
+        g.away_w,
+        g.away_l,
         b.winner_home_or_away,
         CASE b.winner_home_or_away
             WHEN 'H' THEN 1
@@ -122,10 +130,15 @@ CREATE TABLE game_with_odds AS
         g.game_id,
         g.local_date,
         g.home_team_id,
+        g.away_team_id,
         g.home_pitcher,
+        g.away_pitcher,
         g.home_w,
         g.home_l,
+        g.away_w,
+        g.away_l,
         po.home_line,
+        po.away_line,
         g.home_team_wins,
         CASE
             WHEN g.home_l = 0 THEN 0
@@ -152,7 +165,7 @@ CREATE TABLE rolling_1
 #This query takes the table made in the previous query and joins it on itself so I can get two dates to compare to each
 #other so I can calculate the rolling average.
 CREATE INDEX batter_idx ON rolling_1(batter);
-CREATE INDEX date_idx ON rolling_1(local_date)
+CREATE INDEX date_idx ON rolling_1(local_date);
 
 
 DROP TABLE IF EXISTS `batting_avg_100_day`;
@@ -163,7 +176,7 @@ CREATE TABLE batting_avg_100_day AS
          , ROUND(SUM(b.Hit)/SUM(b.atBat),3) batting_avg
     FROM rolling_1 a JOIN rolling_1 b ON
     b.local_date BETWEEN date_add(a.local_date, INTERVAL -100 DAY) AND a.local_date AND a.batter = b.batter
-    GROUP BY a.batter, a.local_date
+    GROUP BY a.batter, a.local_date;
 
 DROP TABLE IF EXISTS `add_team_roll`;
 CREATE TABLE add_team_roll AS
@@ -175,6 +188,8 @@ CREATE TABLE add_team_roll AS
     FROM batting_avg_100_day ba
         JOIN battersInGame bg ON bg.batter = ba.batter AND bg.game_id = ba.game_id
     GROUP BY game_id, bg.team_id;
+
+
 
 #This is very similar to the last query but I joined the game table to get the dates so I
 #can group by the year as well as the batter. This makes it an annual batting average.
@@ -203,8 +218,10 @@ CREATE TABLE add_team_annual AS
     GROUP BY game_id, team_id;
 
 
-DROP TABLE IF EXISTS `join_team_ba_game`;
-CREATE TABLE join_team_ba_game AS
+
+
+DROP TABLE IF EXISTS `home_team_stats`;
+CREATE TABLE home_team_stats AS
     SELECT
         g.game_id,
         #g.local_date,
@@ -231,3 +248,83 @@ CREATE TABLE join_team_ba_game AS
         JOIN add_team_roll atr on g.game_id = atr.game_id AND g.home_team_id = atr.team_id
         JOIN add_team_annual ata on g.game_id = ata.game_id AND g.home_team_id = ata.team_id
         JOIN pitch_count_and_stat p on g.game_id = p.game_id AND g.home_pitcher = p.pitcher;
+
+
+DROP TABLE IF EXISTS `away_team_stats`;
+CREATE TABLE away_team_stats AS
+    SELECT
+        g.game_id,
+        #g.local_date,
+        year(g.local_date) AS year,
+        g.away_team_id,
+        g.away_pitcher,
+        g.away_w,
+        g.away_l,
+        g.away_line,
+        g.wins_loss_odds,
+        ata.team_annual_ba,
+        atr.team_roll_ba,
+        p.pitchesThrown,
+        p.innings_pitched,
+        p.pitches_over_DSLP,
+        p.whip,
+        p.season_over_career_era,
+        p.career_so_over_bb,
+        p.season_so_over_bb,
+        p.diff_so_vs_bb,
+        g.home_team_wins
+
+    FROM game_with_odds g
+        JOIN add_team_roll atr on g.game_id = atr.game_id AND g.away_team_id = atr.team_id
+        JOIN add_team_annual ata on g.game_id = ata.game_id AND g.away_team_id = ata.team_id
+        JOIN pitch_count_and_stat p on g.game_id = p.game_id AND g.away_pitcher = p.pitcher;
+
+
+DROP TABLE IF EXISTS `final_table`;
+CREATE TABLE final_table AS
+    SELECT
+        h.game_id,
+        #h.local_date,
+        h.year,
+        h.home_team_id,
+        a.away_team_id,
+        h.home_pitcher,
+        a.away_pitcher,
+        h.home_w,
+        h.home_l,
+        h.home_line,
+        a.away_w,
+        a.away_l,
+        a.away_line,
+        h.team_roll_ba AS home_annual_ba,
+        a.team_annual_ba AS away_annual_ba,
+        h.team_roll_ba - a.team_roll_ba AS dif_annual_ba,
+        h.pitchesThrown AS home_pitchesThrown,
+        a.pitchesThrown AS away_pitchesThrown,
+        h.pitchesThrown - a.pitchesThrown AS dif_pitchesThrown,
+        h.innings_pitched AS home_innings_pitched,
+        a.innings_pitched AS away_innings_pitched,
+        h.innings_pitched - a.innings_pitched AS dif_innings_pitched,
+        h.pitches_over_DSLP AS home_DSLP_ratio,
+        a.pitches_over_DSLP AS away_DSLP_ratio,
+        h.pitches_over_DSLP - a.pitches_over_DSLP AS dif_DSLP_ratio,
+        h.whip AS home_whip,
+        a.whip AS away_whip,
+        h.whip - a.whip AS dif_whip,
+        h.season_over_career_era AS home_soc_era,
+        a.season_over_career_era AS away_soc_era,
+        h.season_over_career_era - a.season_over_career_era AS dif_soc_era,
+        h.career_so_over_bb AS home_career_so_b,
+        a.career_so_over_bb AS away_carrer_so_b,
+        h.career_so_over_bb - a.career_so_over_bb AS dif_career_so_b,
+        h.season_so_over_bb AS home_season_so_b,
+        a.season_so_over_bb AS away_season_so_b,
+        h.season_so_over_bb - a.career_so_over_bb AS dif_season_so_b,
+        h.diff_so_vs_bb AS home_dsvb,
+        a.diff_so_vs_bb AS away_dsvb,
+        h.diff_so_vs_bb - a.diff_so_vs_bb AS dif_dsvb,
+        h.home_team_wins
+
+    FROM home_team_stats h
+        JOIN away_team_stats a on h.game_id = a.game_id
+    GROUP BY a.game_id;
