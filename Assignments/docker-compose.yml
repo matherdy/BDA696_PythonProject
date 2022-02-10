@@ -1,0 +1,25 @@
+version: "3.3"
+services:
+  assignment5:
+    container_name: assignment5
+    depends_on:
+      - mariadb
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./docker_hw:/app/html_files #This makes it so when i save to html files in code it actually saves it to docker_hw in continer
+      - ./baseball.sql:/app/baseball.sql
+
+  mariadb:
+    container_name: mariadb
+    image: mariadb:10.6.4
+    restart: always
+    environment:
+      MYSQL_USER: baseball
+      MYSQL_PASSWORD: BDAMaster
+      MYSQL_ROOT_PASSWORD: BDAMaster
+    ports:
+      - "3307:3306"
+    volumes:
+      - ./mariadb:/var/lib/mysql

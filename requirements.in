@@ -3,5 +3,8 @@ pandas
 scikit-learn
 plotly
 sqlalchemy
+mariadb
 pyspark
 pyspark-stubs
+statsmodels
+seaborn
